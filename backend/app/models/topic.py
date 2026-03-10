@@ -1,7 +1,7 @@
 import enum
 from datetime import datetime
 
-from sqlalchemy import DateTime, Enum, Float, ForeignKey, Integer, JSON, String, Text, func
+from sqlalchemy import DateTime, Enum, Float, ForeignKey, Integer, JSON, String, Text, UniqueConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -20,6 +20,7 @@ class TopicProcessingStatus(str, enum.Enum):
 
 class Topic(Base):
     __tablename__ = "topics"
+    __table_args__ = (UniqueConstraint("scan_execution_id", "url", name="uq_topics_scan_execution_url"),)
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True, autoincrement=True)
     scan_execution_id: Mapped[int] = mapped_column(
@@ -62,4 +63,3 @@ class Topic(Base):
 
     scan_execution = relationship("ScanExecution", back_populates="topics")
     test_cases = relationship("TestCase", back_populates="topic", cascade="all, delete-orphan")
-

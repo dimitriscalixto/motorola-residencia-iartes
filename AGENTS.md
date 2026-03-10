@@ -32,12 +32,19 @@ Este arquivo registra o estado de implementacao e as decisoes de arquitetura par
 - `GET /api/v1/scan/latest` implementado.
 - Botao principal do frontend conectado ao endpoint.
 
+### Fase 3: concluida
+- `link_classifier.py` implementado com regras especificas para Motorola Community.
+- `discovery_service.py` implementado com deduplicacao e persistencia de candidatos.
+- Descoberta de links iniciando da URL fixa com Firecrawl map + fallback HTTP.
+- Persistencia de topicos candidatos em `topics` com metadados de origem.
+- Atualizacao de contadores da execucao (`discovered_links_count`, `valid_topics_count`).
+
 ### Proxima fase obrigatoria
-### Fase 3
-- Implementar `discovery_service.py` com descoberta real de links.
-- Implementar `link_classifier.py` com regras especificas da comunidade Motorola.
-- Persistir candidatos de topico deduplicados.
-- Atualizar contadores da execucao.
+### Fase 4
+- Implementar `topic_scraper_service.py`.
+- Implementar scraping detalhado em `firecrawl_client.py::scrape_topic`.
+- Implementar `extraction_service.py` para extracao estruturada e confidence score.
+- Persistir `raw_content` e metadados de extracao por topico.
 
 ## Convencoes
 - Servicos por responsabilidade em `backend/app/services`.
@@ -48,6 +55,5 @@ Este arquivo registra o estado de implementacao e as decisoes de arquitetura par
 
 ## Decisoes tecnicas
 - Bootstrap de banco por `Base.metadata.create_all` no startup para simplificar setup inicial.
-- Na Fase 2, o worker de scan ainda e placeholder (inicia e finaliza sem discovery real).
+- Na Fase 3, o worker de scan passou a executar descoberta e persistencia de topicos candidatos.
 - CORS liberado para `localhost:5173` e `127.0.0.1:5173` para integracao local frontend/backend.
-

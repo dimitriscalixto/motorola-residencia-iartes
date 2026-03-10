@@ -15,7 +15,7 @@ settings = get_settings()
 
 
 class ScanService:
-    """Coordinates scan execution lifecycle for Phase 2."""
+    """Coordinates scan execution lifecycle for Phase 2 and Phase 3."""
 
     def __init__(self, db: Session):
         self.db = db

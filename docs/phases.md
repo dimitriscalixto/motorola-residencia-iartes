@@ -16,9 +16,15 @@
 - Implementacao de `GET /scan/latest`.
 - Botao unico no frontend chamando o endpoint de inicio.
 
-## Fases 3 a 7 (pendentes)
-- Descoberta e classificacao de links.
+## Fase 3 (concluida)
+- Implementacao de `link_classifier.py` com regras especificas de `topic`, `listing` e `irrelevant`.
+- Implementacao de `discovery_service.py` com deduplicacao e persistencia de candidatos.
+- Descoberta iniciando da URL fixa da comunidade Motorola.
+- Navegacao de listagens/paginacao via Firecrawl map com fallback HTTP.
+- Persistencia dos topicos descobertos em `topics` com rastreabilidade da origem.
+- Atualizacao de contadores em `ScanExecution` (`discovered_links_count` e `valid_topics_count`).
+
+## Fases 4 a 7 (pendentes)
 - Scraping detalhado e extracao estruturada.
 - Integracao Ollama com validacao JSON e retries.
 - Dashboard completo, exportacoes, robustez final e testes ampliados.
-

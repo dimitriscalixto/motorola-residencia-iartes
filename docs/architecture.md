@@ -1,4 +1,4 @@
-# Arquitetura (Fases 1 e 2)
+# Arquitetura (Fases 1 a 3)
 
 ## Visao geral
 O projeto e um monorepo com separacao entre backend, frontend e infraestrutura Docker.
@@ -19,7 +19,7 @@ Estrutura principal:
 - `app/core/celery_app.py`: configuracao da fila Celery (Redis).
 - `app/workers/tasks.py`: tarefas assicronas do worker.
 - `app/services/*`: servicos por responsabilidade.
-- `app/integrations/*`: clientes externos (stubs para Firecrawl/Ollama nas fases futuras).
+- `app/integrations/*`: clientes externos (Firecrawl com descoberta na Fase 3, Ollama para fase futura).
 
 ## Frontend
 Estrutura principal:
@@ -37,17 +37,17 @@ Modelos base:
 
 Bootstrap atual: `Base.metadata.create_all` no startup da API.
 
-## Fluxo implementado ate a Fase 2
+## Fluxo implementado ate a Fase 3
 1. Frontend chama `POST /api/v1/scan/start`.
 2. Backend cria `ScanExecution` com fonte fixa da comunidade Motorola.
 3. Backend enfileira tarefa no Celery.
-4. Worker executa fluxo placeholder de inicio/fim da execucao.
-5. Frontend consulta `GET /api/v1/scan/latest` para atualizar resumo.
+4. Worker executa descoberta de links de listagem/subtopicos.
+5. `LinkClassifier` classifica URLs em `topic`, `listing` e `irrelevant`.
+6. `DiscoveryService` deduplica e persiste topicos candidatos em `topics`.
+7. `ScanExecution` recebe contadores de descoberta atualizados.
+8. Frontend consulta `GET /api/v1/scan/latest` para atualizar resumo.
 
 ## Pipeline planejado (fases seguintes)
-1. Descobrir links relevantes no dominio fixo Motorola Community (Firecrawl).
-2. Classificar links e selecionar topicos validos.
-3. Fazer scraping detalhado de topicos e extracao estruturada.
-4. Gerar casos de teste com Ollama local.
-5. Exibir progresso detalhado, listagem, detalhe e exportacoes.
-
+1. Fazer scraping detalhado de topicos e extracao estruturada.
+2. Gerar casos de teste com Ollama local.
+3. Exibir progresso detalhado, listagem, detalhe e exportacoes.
